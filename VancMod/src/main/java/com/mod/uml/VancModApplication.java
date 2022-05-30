@@ -8,13 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mod.uml.domain.Categoria;
+import com.mod.uml.domain.Produto;
 import com.mod.uml.repositories.CategoriaRepository;
+import com.mod.uml.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class VancModApplication implements CommandLineRunner{
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private ProdutoRepository produtoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(VancModApplication.class, args);
 	}
@@ -24,7 +29,20 @@ public class VancModApplication implements CommandLineRunner{
 		Categoria cat1 = new Categoria(null, "Informatica");
 		Categoria cat2 = new Categoria(null, "Escritorio");
 		
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
+		
+		cat1.getProduto().addAll(Arrays.asList(p1,p2,p3));
+		cat2.getProduto().addAll(Arrays.asList(p2));
+		
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+				
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		 
 	}
 
 }
