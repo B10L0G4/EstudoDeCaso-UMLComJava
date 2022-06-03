@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mod.uml.domain.Categoria;
 import com.mod.uml.domain.Cidade;
+import com.mod.uml.domain.Cliente;
+import com.mod.uml.domain.Endereco;
 import com.mod.uml.domain.Estado;
 import com.mod.uml.domain.Produto;
+import com.mod.uml.domain.enuns.TipoCliente;
 import com.mod.uml.repositories.CategoriaRepository;
 import com.mod.uml.repositories.CidadeRepository;
+import com.mod.uml.repositories.ClienteRepository;
+import com.mod.uml.repositories.EnderecoRepository;
 import com.mod.uml.repositories.EstadoRepository;
 import com.mod.uml.repositories.ProdutoRepository;
 
@@ -27,6 +32,11 @@ public class VancModApplication implements CommandLineRunner{
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(VancModApplication.class, args);
@@ -64,7 +74,16 @@ public class VancModApplication implements CommandLineRunner{
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
+		Cliente cli1= new Cliente(null, "Maria Silva", "maria@gmail.com","1234567891",TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("4569874587","125478563"));
 		
+		Endereco e1= new Endereco(null,"Rua Flores", "300", "APto 303","Jardim","32146586",cli1, c1);
+		Endereco e2= new Endereco(null,"Rua Cravos", "300", "APto 603","Rosa","65896544",cli1, c2);
+		
+		cli1.getEndereco().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 
 }
