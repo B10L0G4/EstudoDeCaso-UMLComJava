@@ -1,5 +1,6 @@
 package com.mod.uml;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.mod.uml.domain.Cidade;
 import com.mod.uml.domain.Cliente;
 import com.mod.uml.domain.Endereco;
 import com.mod.uml.domain.Estado;
+import com.mod.uml.domain.Pagamento;
+import com.mod.uml.domain.PagamentoComBoleto;
+import com.mod.uml.domain.PagamentoComCartao;
+import com.mod.uml.domain.Pedido;
 import com.mod.uml.domain.Produto;
+import com.mod.uml.domain.enuns.EstadoPagamento;
 import com.mod.uml.domain.enuns.TipoCliente;
 import com.mod.uml.repositories.CategoriaRepository;
 import com.mod.uml.repositories.CidadeRepository;
 import com.mod.uml.repositories.ClienteRepository;
 import com.mod.uml.repositories.EnderecoRepository;
 import com.mod.uml.repositories.EstadoRepository;
+import com.mod.uml.repositories.PagamentoRepository;
+import com.mod.uml.repositories.PedidoRepository;
 import com.mod.uml.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +44,10 @@ public class VancModApplication implements CommandLineRunner{
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -84,6 +96,24 @@ public class VancModApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/05/2022 23:59") ,cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("01/06/2022 09:00") ,cli1, e2);
+		
+		Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1 ,6);
+		ped1.setPagamento(pgto1);
+		
+		Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2 ,sdf.parse("10/09/2022 09:00"), null );
+		ped2.setPagamento(pgto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pgto1,pgto2));
+		
+		
 	}
 
 }
