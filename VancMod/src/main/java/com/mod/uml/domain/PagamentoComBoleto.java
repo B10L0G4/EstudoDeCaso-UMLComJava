@@ -2,8 +2,10 @@ package com.mod.uml.domain;
 
 import java.util.Date;
 
-import com.mod.uml.domain.enuns.EstadoPagamento;
+import javax.persistence.Entity;
 
+import com.mod.uml.domain.enuns.EstadoPagamento;
+@Entity
 public class PagamentoComBoleto extends Pagamento {
 
 	private static final long serialVersionUID = 1L;

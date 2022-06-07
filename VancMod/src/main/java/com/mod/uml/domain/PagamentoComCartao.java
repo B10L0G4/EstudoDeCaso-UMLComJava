@@ -1,7 +1,9 @@
 package com.mod.uml.domain;
 
-import com.mod.uml.domain.enuns.EstadoPagamento;
+import javax.persistence.Entity;
 
+import com.mod.uml.domain.enuns.EstadoPagamento;
+@Entity
 public class PagamentoComCartao extends Pagamento {
 
 	private static final long serialVersionUID = 1L;
