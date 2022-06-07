@@ -1,6 +1,5 @@
 package com.mod.uml.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.mod.uml.domain.enuns.EstadoPagamento;
@@ -13,12 +12,11 @@ public class PagamentoComBoleto extends Pagamento {
 	private Date dataPagamento;
 	
 	public PagamentoComBoleto() {
-		
 	}
 
 	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
 		super(id, estado, pedido);
-		this.dataPagamento =dataPagamento;
+		this.dataPagamento = dataPagamento;
 		this.dataVencimento= dataVencimento;
 	}
 

@@ -1,7 +1,5 @@
 package com.mod.uml.domain;
 
-import java.io.Serializable;
-
 import com.mod.uml.domain.enuns.EstadoPagamento;
 
 public class PagamentoComCartao extends Pagamento {
@@ -10,7 +8,6 @@ public class PagamentoComCartao extends Pagamento {
 	private Integer numeroDeParcelas;
 	
 	public PagamentoComCartao() {
-		
 	}
 
 	public PagamentoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {

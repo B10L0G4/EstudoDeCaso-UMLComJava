@@ -11,6 +11,7 @@ public class Pagamento implements Serializable  {
 	
 	private Integer id;
 	private EstadoPagamento estado;
+	
 	private Pedido pedido;
 	
 	public Pagamento() {
