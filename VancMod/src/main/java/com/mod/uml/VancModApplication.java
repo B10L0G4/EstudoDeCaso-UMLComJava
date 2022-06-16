@@ -13,6 +13,7 @@ import com.mod.uml.domain.Cidade;
 import com.mod.uml.domain.Cliente;
 import com.mod.uml.domain.Endereco;
 import com.mod.uml.domain.Estado;
+import com.mod.uml.domain.ItemPedido;
 import com.mod.uml.domain.Pagamento;
 import com.mod.uml.domain.PagamentoComBoleto;
 import com.mod.uml.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mod.uml.repositories.CidadeRepository;
 import com.mod.uml.repositories.ClienteRepository;
 import com.mod.uml.repositories.EnderecoRepository;
 import com.mod.uml.repositories.EstadoRepository;
+import com.mod.uml.repositories.ItemPedidoRepository;
 import com.mod.uml.repositories.PagamentoRepository;
 import com.mod.uml.repositories.PedidoRepository;
 import com.mod.uml.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class VancModApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -112,6 +116,19 @@ public class VancModApplication implements CommandLineRunner{
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgto1,pgto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1 , 0.00, 1 ,2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3 , 0.00, 2 ,80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2 , 100.00, 1 ,800.00);
+	
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		
 		
 	}
